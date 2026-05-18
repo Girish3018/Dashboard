@@ -9,11 +9,13 @@ router.get("/", async (req, res) => {
     const query = `
       SELECT
           s.id,
+          s.tool,
           s.secret_type,
           s.file_path,
           s.source_url,
           s.created_at,
           s.is_active,
+          s.secret_status,
 
           r.name AS repo_name,
 
@@ -24,9 +26,9 @@ router.get("/", async (req, res) => {
           sv.verdict,
           sv.confidence,
           sv.risk_score,
-          sv.status,
           sv.reasoning,
-          sv.evidence
+          sv.evidence,
+          sv.is_likely_active
 
       FROM secrets s
 
@@ -46,11 +48,12 @@ router.get("/", async (req, res) => {
 
     const formatted = result.rows.map((item) => ({
       id: item.id,
+      tool: item.tool || "Unknown",
       secretType: item.secret_type || "Unknown",
       repo: item.repo_name,
       severity: getSeverity(item.risk_score),
       riskScore: item.risk_score,
-      status: item.status || "OPEN",
+      status: item.secret_status || "OPEN",
       time: item.created_at,
       committerEmail: item.committer_email || item.author_email || "unknown@company.com",
       commitHash: item.commit_hash,
@@ -61,15 +64,13 @@ router.get("/", async (req, res) => {
       evidence: item.evidence,
       verdict: item.verdict,
       isActive: item.is_active,
+      isLikelyActive: item.is_likely_active,
     }));
 
     res.json(formatted);
   } catch (err) {
     console.error(err);
-
-    res.status(500).json({
-      error: "Failed to fetch findings",
-    });
+    res.status(500).json({ error: "Failed to fetch findings" });
   }
 });
 
@@ -90,10 +91,11 @@ router.get("/stats", async (req, res) => {
     `);
     const scannedReposList = scannedReposQuery.rows.map(row => row.name);
 
+    // Active incidents = secrets still OPEN
     const activeIncidents = await pool.query(`
       SELECT COUNT(*)
-      FROM secret_validations
-      WHERE status = 'OPEN'
+      FROM secrets
+      WHERE secret_status = 'OPEN'
     `);
 
     res.json({
@@ -105,35 +107,25 @@ router.get("/stats", async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-
-    res.status(500).json({
-      error: "Failed to fetch stats",
-    });
+    res.status(500).json({ error: "Failed to fetch stats" });
   }
 });
 
 router.put("/:id/status", async (req, res) => {
   try {
     const { id } = req.params;
-    const { status } = req.body;
+    const { status, changedBy = "dashboard", changeReason = null } = req.body;
 
     const validStatuses = ["OPEN", "IN_PROGRESS", "RESOLVED", "ACCEPTED_RISK"];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ error: "Invalid status" });
     }
 
-    const updateQuery = `
-      UPDATE secret_validations
-      SET status = $1
-      WHERE secret_id = $2
-      RETURNING *
-    `;
-
-    const result = await pool.query(updateQuery, [status, id]);
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Finding not found" });
-    }
+    // Use the stored procedure which also writes audit history
+    await pool.query(
+      `SELECT set_secret_status($1, $2, $3, $4)`,
+      [id, status, changedBy, changeReason]
+    );
 
     res.json({ success: true, status });
   } catch (err) {
