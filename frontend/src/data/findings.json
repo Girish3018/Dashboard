@@ -1,0 +1,23 @@
+[
+  {
+    "secretType": "AWS Key",
+    "repo": "payment-service",
+    "severity": "Critical",
+    "status": "Open",
+    "time": "2 min ago"
+  },
+  {
+    "secretType": "GitHub Token",
+    "repo": "frontend-app",
+    "severity": "High",
+    "status": "Investigating",
+    "time": "15 min ago"
+  },
+  {
+    "secretType": "Slack Webhook",
+    "repo": "internal-tools",
+    "severity": "Medium",
+    "status": "Resolved",
+    "time": "1 hour ago"
+  }
+]

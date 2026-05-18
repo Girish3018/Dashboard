@@ -1,0 +1,9 @@
+Server running on port 5002
+[SCAN TRIGGERED] Repo: https://github.com/Sakshi20Deshmukh/vulnerable-devsecops-repo
+[SCAN TRIGGERED] Branches: main
+[JENKINS] Calling: http://10.128.71.180:8080/job/Secret-Scan-Job/buildWithParameters?repo=https%3A%2F%2Fgithub.com%2FSakshi20Deshmukh%2Fvulnerable-devsecops-repo&BRANCHES=main
+[JENKINS] Job triggered successfully.
+[SCAN TRIGGERED] Repo: https://github.com/Sakshi20Deshmukh/vulnerable-devsecops-repo
+[SCAN TRIGGERED] Branches: main
+[JENKINS] Calling: http://10.128.71.180:8080/job/Secret-Scan-Job/buildWithParameters?repo=https%3A%2F%2Fgithub.com%2FSakshi20Deshmukh%2Fvulnerable-devsecops-repo&BRANCHES=main
+[JENKINS] Job triggered successfully.

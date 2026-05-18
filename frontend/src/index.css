@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --surface: #0b1120;
+  --surface-rgb: 11, 17, 32;
+  --surface-strong: #0f172a;
+  --surface-strong-rgb: 15, 23, 42;
+  --surface-soft: #1e293b;
+  --surface-soft-rgb: 30, 41, 59;
+  --card: #0f172a;
+  --card-rgb: 15, 23, 42;
+  --border: #334155;
+  --border-rgb: 51, 65, 85;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --muted-soft: #cbd5e1;
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.18);
+  --input: #0a0f1c;
+  --code: #0f172a;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --overlay: rgba(248, 250, 252, 0.06);
+}
+
+.light {
+  color-scheme: light;
+  --surface: #eff2f7;
+  --surface-strong: #dbe2ec;
+  --surface-soft: #c8d4e0;
+  --card: #f7f9fc;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --muted: #475569;
+  --muted-soft: #64748b;
+  --accent: #2563eb;
+  --accent-soft: rgba(37, 99, 235, 0.12);
+  --input: #f5f8fb;
+  --code: #e2e8f0;
+  --shadow: rgba(15, 23, 42, 0.08);
+  --overlay: rgba(15, 23, 42, 0.04);
+  --surface-rgb: 239, 242, 247;
+  --surface-strong-rgb: 219, 226, 236;
+  --surface-soft-rgb: 200, 212, 224;
+  --card-rgb: 247, 249, 252;
+  --border-rgb: 203, 213, 225;
+}
+
+.dark {
+  color-scheme: dark;
+  --surface: #0b1120;
+  --surface-strong: #0f172a;
+  --surface-soft: #1e293b;
+  --card: #0f172a;
+  --border: #334155;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --muted-soft: #cbd5e1;
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.18);
+  --input: #0a0f1c;
+  --code: #0f172a;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --surface-rgb: 11, 17, 32;
+  --surface-strong-rgb: 15, 23, 42;
+  --surface-soft-rgb: 30, 41, 59;
+  --card-rgb: 15, 23, 42;
+  --border-rgb: 51, 65, 85;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--text);
+  font-family: Inter, sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.theme-surface {
+  background: var(--surface);
+}
+
+.theme-surface-alpha {
+  background: rgba(var(--surface-rgb), 0.8);
+}
+
+.theme-surface-strong {
+  background: var(--surface-strong);
+}
+
+.theme-surface-soft {
+  background: var(--surface-soft);
+}
+
+.theme-surface-soft-alpha {
+  background: rgba(var(--surface-soft-rgb), 0.8);
+}
+
+.theme-card {
+  background: var(--card);
+}
+
+.theme-input {
+  background: var(--input);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.theme-border {
+  border-color: var(--border);
+}
+
+.border-theme-border-30 {
+  border-color: rgba(var(--border-rgb), 0.3);
+}
+
+.border-theme-border-50 {
+  border-color: rgba(var(--border-rgb), 0.5);
+}
+
+.border-theme-border-60 {
+  border-color: rgba(var(--border-rgb), 0.6);
+}
+
+.theme-text {
+  color: var(--text);
+}
+
+.theme-muted {
+  color: var(--muted);
+}
+
+.theme-overlay {
+  background: var(--overlay);
+}
+
+.theme-muted-soft {
+  color: var(--muted-soft);
+}
+
+.theme-code {
+  background: var(--code);
+  border-color: var(--border);
+  color: var(--accent);
+}
+
+.theme-hover:hover {
+  background: var(--surface-strong);
+}
+
+.theme-card,
+.theme-surface,
+.theme-surface-strong,
+.theme-surface-soft,
+.theme-input {
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.55);
+  border-radius: 10px;
+}
