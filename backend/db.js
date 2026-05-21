@@ -1,6 +1,13 @@
 import pg from "pg";
 import dotenv from "dotenv";
 
+PORT=5002
+PG_USER=girish
+PG_HOST=localhost
+PG_DATABASE=secrets_db
+PG_PASSWORD=
+PG_PORT=5432
+
 dotenv.config();
 
 const { Pool } = pg;
